@@ -12,7 +12,6 @@ import io.reactivex.Observable;
  */
 public class BshcClient extends AbstractBshcClient {
 
-    private static final int COMMON_PORT = 8444;
     private static final String PATH_PREFIX = "/smarthome/";
 
     public BshcClient(final String host, final CertificateStorage certificateStorage) {

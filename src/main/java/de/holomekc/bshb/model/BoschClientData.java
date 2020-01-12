@@ -1,5 +1,6 @@
 package de.holomekc.bshb.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * @since 12.01.2020
  */
 @JsonTypeName("client")
+@JsonTypeInfo(include = JsonTypeInfo.As.PROPERTY, use = JsonTypeInfo.Id.NAME)
 public class BoschClientData {
 
     private final String id;

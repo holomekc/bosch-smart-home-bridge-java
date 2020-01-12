@@ -3,6 +3,8 @@ package de.holomekc.bshb.client;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
@@ -12,11 +14,13 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.logging.LoggingFeature;
 
 import de.holomekc.bshb.BshbResponse;
 import de.holomekc.bshb.CertificateStorage;
@@ -31,6 +35,9 @@ import io.reactivex.Observable;
  */
 public abstract class AbstractBshcClient {
 
+    protected static final int COMMON_PORT = 8444;
+    protected static final int PAIR_PORT = 8443;
+
     private static final String TLS_VERSION = "TLSv1.2";
 
     private final Client client;
@@ -44,10 +51,14 @@ public abstract class AbstractBshcClient {
     }
 
     protected Client createClient() {
+        final Logger logger = Logger.getLogger(getClass().getName());
+
+        final Feature feature = new LoggingFeature(logger, Level.INFO, null, null);
+
         final ClientBuilder clientBuilder = extendClient( // wrap
                 ClientBuilder.newBuilder().sslContext(createSslContext())
                         .hostnameVerifier((hostname, sslSession) -> hostname.equalsIgnoreCase(this.host))
-                        .register(JacksonFeature.class).register(new ObjectMapperProvider())
+                        .register(JacksonFeature.class).register(new ObjectMapperProvider()).register(feature)
                 //wrap
         );
 
@@ -86,8 +97,7 @@ public abstract class AbstractBshcClient {
                 final Response response;
                 if (data != null) {
                     response =
-                            invocationBuilder.build(method, Entity.entity(data, MediaType.APPLICATION_JSON_PATCH_JSON))
-                                    .invoke();
+                            invocationBuilder.build(method, Entity.entity(data, MediaType.APPLICATION_JSON)).invoke();
                 } else {
                     response = invocationBuilder.build(method).invoke();
                 }

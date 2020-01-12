@@ -70,17 +70,14 @@ public class BoschSmartHomeBridge {
         final AtomicInteger counter = new AtomicInteger(0);
         return Observable.create(observer -> {
             System.out.println("Start pairing. Activate pairing on Bosch Smart Home Controller by pressing button until flashing.");
-            this.pairingClient.sendPairingRequest(identifier, name, null, systemPassword).retryWhen(errors -> errors.concatMap((e) -> {
-                if (counter.get() > pairingAttempts) {
-                    return Observable.error(e);
-                } else {
-                    counter.incrementAndGet();
-                    return Observable.create(next -> {
-                        System.out.println("Could not pair client. Did you press the paring button? Error details: " + e.getCause());
-                        next.onNext(e);
-                        next.onComplete();
-                    }).delay(pairingDelay, TimeUnit.MILLISECONDS);
+            final String cert = this.certificateStorage.getClientCert();
+            this.pairingClient
+                    .sendPairingRequest(identifier, name, cert, systemPassword).retryWhen(attempts -> attempts.flatMap(err -> {
+                if (counter.incrementAndGet() < pairingAttempts) {
+                    System.out.println("Could not pair client. Did you press the paring button? Error details:");
+                    return Observable.timer(pairingDelay, TimeUnit.MILLISECONDS);
                 }
+                return Observable.error(err);
             })).subscribe(value -> {
                 if (value.getResponse().getStatus() == 201) {
                     System.out.println("Pairing successful.");
