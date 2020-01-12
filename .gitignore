@@ -1,0 +1,6 @@
+# IDE
+.idea
+bosch-smart-home-bridge-java.iml
+
+# Compiled binary
+target
