@@ -5,7 +5,7 @@ import de.holomekc.bshb.BoschSmartHomeBridgeBuilder;
 /**
  * Part of {@link BoschSmartHomeBridgeBuilder} to make sure that required properties are set. This is for BSHC host
  *
- * @author Christopher Holomek (christopher.holomek@bmw.de)
+ * @author Christopher Holomek
  * @since 12.01.2020
  */
 public interface Host {

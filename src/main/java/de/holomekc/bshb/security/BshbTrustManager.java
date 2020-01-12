@@ -13,7 +13,7 @@ import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * @author Christopher Holomek (christopher.holomek@bmw.de)
+ * @author Christopher Holomek
  * @since 12.01.2020
  */
 public class BshbTrustManager implements X509TrustManager {

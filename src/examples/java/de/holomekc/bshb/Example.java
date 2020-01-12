@@ -1,7 +1,7 @@
 package de.holomekc.bshb;
 
 /**
- * @author Christopher Holomek (christopher.holomek@bmw.de)
+ * @author Christopher Holomek
  * @since 12.01.2020
  */
 public class Example {

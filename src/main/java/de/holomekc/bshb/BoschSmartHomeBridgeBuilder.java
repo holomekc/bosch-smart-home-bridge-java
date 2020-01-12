@@ -5,7 +5,7 @@ import de.holomekc.bshb.builder.ClientKey;
 import de.holomekc.bshb.builder.Host;
 
 /**
- * @author Christopher Holomek (christopher.holomek@bmw.de)
+ * @author Christopher Holomek
  * @since 12.01.2020
  */
 public final class BoschSmartHomeBridgeBuilder implements Host, ClientCert, ClientKey {

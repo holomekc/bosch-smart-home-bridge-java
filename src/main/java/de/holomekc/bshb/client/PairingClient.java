@@ -6,7 +6,7 @@ import de.holomekc.bshb.model.BoschClientData;
 import io.reactivex.Observable;
 
 /**
- * @author Christopher Holomek (christopher.holomek@bmw.de)
+ * @author Christopher Holomek
  * @since 12.01.2020
  */
 public class PairingClient extends AbstractBshcClient {

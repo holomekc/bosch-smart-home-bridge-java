@@ -3,7 +3,7 @@ package de.holomekc.bshb.client;
 import javax.ws.rs.client.Invocation;
 
 /**
- * @author Christopher Holomek (christopher.holomek@bmw.de)
+ * @author Christopher Holomek
  * @since 12.01.2020
  */
 @FunctionalInterface

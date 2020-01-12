@@ -3,7 +3,7 @@ package de.holomekc.bshb.model;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
- * @author Christopher Holomek (christopher.holomek@bmw.de)
+ * @author Christopher Holomek
  * @since 12.01.2020
  */
 @JsonTypeName("client")

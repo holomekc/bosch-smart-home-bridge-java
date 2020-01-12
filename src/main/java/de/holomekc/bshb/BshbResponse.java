@@ -3,7 +3,7 @@ package de.holomekc.bshb;
 import javax.ws.rs.core.Response;
 
 /**
- * @author Christopher Holomek (christopher.holomek@bmw.de)
+ * @author Christopher Holomek
  * @since 12.01.2020
  */
 public class BshbResponse {
