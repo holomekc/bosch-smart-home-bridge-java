@@ -22,7 +22,8 @@ import de.holomekc.bshb.model.BoschClientData;
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
+public enum ObjectMapperProvider implements ContextResolver<ObjectMapper> {
+    INSTANCE;
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
@@ -39,6 +40,10 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
     @Override
     public ObjectMapper getContext(final Class<?> type) {
+        return OBJECT_MAPPER;
+    }
+
+    public ObjectMapper getObjectMapper() {
         return OBJECT_MAPPER;
     }
 }

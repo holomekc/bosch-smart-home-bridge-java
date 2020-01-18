@@ -1,7 +1,6 @@
 package de.holomekc.bshb;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
+import de.holomekc.bshb.client.typed.TypedBshcClient;
 import de.holomekc.bshb.security.CertificateDefinition;
 
 /**
@@ -31,6 +30,8 @@ public class Example {
                 BoschSmartHomeBridgeBuilder.builder().withHost(host).withClientCert(certificate.getCert())
                         .withClientPrivateKey(certificate.getPrivateKey()).build();
 
+        final TypedBshcClient typedClient = new TypedBshcClient(boschSmartHomeBridge.getBshcClient());
+
         try {
 
             boschSmartHomeBridge.pairIfNeeded("bshb", identifier, password).switchMap(pairingResponse -> {
@@ -43,12 +44,38 @@ public class Example {
                     System.out.println("Already paired");
                 }
 
-                return boschSmartHomeBridge.getBshcClient().getRooms();
+                // If you want more control then use this
+                // return boschSmartHomeBridge.getBshcClient().getRooms()
+
+                // Or used typed version
+                return typedClient.getRooms();
             }).blockingForEach(getRoomsResponse -> {
                 System.out.println("GetRooms:");
-                final JsonNode jsonNode = getRoomsResponse.getResponse().readEntity(JsonNode.class);
-                System.out.println(jsonNode.get(0).get("id"));
+                //final List<Room> rooms = getRoomsResponse.readList(Room.class);
+                System.out.println(getRoomsResponse.getData().get(0).getId());
+
                 //System.out.println(getRoomsResponse.getResponse().readEntity(JsonNode.class));
+
+                typedClient.getInformation().subscribe(info -> {
+                    System.out.println(info.getData());
+                });
+
+                boschSmartHomeBridge.getBshcClient().getDevices().subscribe(info -> {
+                    System.out.println(info.getResponse().readEntity(String.class));
+                });
+
+                boschSmartHomeBridge.getBshcClient().setAlarmState(false).subscribe(info -> {
+                    System.out.println(info.getResponse().readEntity(String.class));
+                });
+
+                boschSmartHomeBridge.getBshcClient().subscribe().subscribe(subscriptionId -> {
+                    System.out.println(subscriptionId);
+
+                    boschSmartHomeBridge.getBshcClient().longPolling(subscriptionId, 30000).subscribe(response -> {
+                        System.out.println(response);
+                    });
+                });
+
             });
         } catch (final Exception e) {
             e.printStackTrace();

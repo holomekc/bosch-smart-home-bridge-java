@@ -1,6 +1,7 @@
 package de.holomekc.bshb.model;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
@@ -8,11 +9,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * @since 12.01.2020
  */
 @JsonTypeName("client")
-@JsonTypeInfo(include = JsonTypeInfo.As.PROPERTY, use = JsonTypeInfo.Id.NAME)
-public class BoschClientData {
+public class BoschClientData extends Identifier {
 
-    private final String id;
-    private final String name;
     private final String primaryRole;
     private final boolean deleted;
     private final String certificate;
@@ -28,19 +26,10 @@ public class BoschClientData {
      *         2048 bit selfsigned client certificate
      */
     public BoschClientData(final String name, final String id, final String certificate) {
-        this.id = "oss_" + id;
-        this.name = "OSS " + name;
+        super("oss_" + id, "OSS " + name);
         this.certificate = certificate;
         this.primaryRole = "ROLE_RESTRICTED_CLIENT";
         this.deleted = false;
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public String getPrimaryRole() {
@@ -53,5 +42,11 @@ public class BoschClientData {
 
     public String getCertificate() {
         return this.certificate;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("primaryRole", this.primaryRole).append("deleted", this.deleted)
+                .append("certificate", this.certificate).toString();
     }
 }

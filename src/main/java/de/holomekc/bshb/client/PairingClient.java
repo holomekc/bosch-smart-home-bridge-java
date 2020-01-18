@@ -5,7 +5,6 @@ import java.util.Base64;
 
 import javax.ws.rs.HttpMethod;
 
-import de.holomekc.bshb.BshbResponse;
 import de.holomekc.bshb.CertificateStorage;
 import de.holomekc.bshb.model.BoschClientData;
 import io.reactivex.Observable;
@@ -37,15 +36,13 @@ public class PairingClient extends AbstractBshcClient {
             final String certificate, final String systemPassword) {
         final BoschClientData clientData = new BoschClientData(name, identifier, certificate);
 
-        return Observable.create(observer -> {
-            this.simpleCall(PAIR_PORT, HttpMethod.POST, PAIR_PATH, clientData, invocationBuilder -> invocationBuilder
-                    .header("Systempassword",
-                            new String(Base64.getEncoder().encode(systemPassword.getBytes(StandardCharsets.UTF_8)))))
-                    .subscribe(next -> {
-                                observer.onNext(next);
-                                observer.onComplete();
-                            }, // we do not complete here on purpose
-                            observer::onError);
-        });
+        return Observable.create(observer -> this.simpleCall(PAIR_PORT, HttpMethod.POST, PAIR_PATH, clientData,
+                invocationBuilder -> invocationBuilder.header("Systempassword",
+                        new String(Base64.getEncoder().encode(systemPassword.getBytes(StandardCharsets.UTF_8)))))
+                .subscribe(next -> {
+                            observer.onNext(next);
+                            observer.onComplete();
+                        }, // we do not complete here on purpose
+                        observer::onError));
     }
 }

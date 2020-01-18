@@ -22,7 +22,6 @@ import javax.ws.rs.core.UriBuilder;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.logging.LoggingFeature;
 
-import de.holomekc.bshb.BshbResponse;
 import de.holomekc.bshb.CertificateStorage;
 import de.holomekc.bshb.exception.BshbException;
 import de.holomekc.bshb.security.BshbKeyManager;
@@ -35,6 +34,7 @@ import io.reactivex.Observable;
  */
 public abstract class AbstractBshcClient {
 
+    protected static final int PUBLIC_PORT = 8446;
     protected static final int COMMON_PORT = 8444;
     protected static final int PAIR_PORT = 8443;
 
@@ -58,7 +58,7 @@ public abstract class AbstractBshcClient {
         final ClientBuilder clientBuilder = extendClient( // wrap
                 ClientBuilder.newBuilder().sslContext(createSslContext())
                         .hostnameVerifier((hostname, sslSession) -> hostname.equalsIgnoreCase(this.host))
-                        .register(JacksonFeature.class).register(new ObjectMapperProvider()).register(feature)
+                        .register(JacksonFeature.class).register(ObjectMapperProvider.INSTANCE).register(feature)
                 //wrap
         );
 
@@ -81,6 +81,11 @@ public abstract class AbstractBshcClient {
     protected ClientBuilder extendClient(final ClientBuilder clientBuilder) {
         // use this if you want to configure builder further
         return clientBuilder;
+    }
+
+    protected <D> Observable<BshbResponse> simpleCall(final int port, final String method, final String path,
+            final D data) {
+        return this.simpleCall(port, method, path, data, options -> options);
     }
 
     protected <D> Observable<BshbResponse> simpleCall(final int port, final String method, final String path,
