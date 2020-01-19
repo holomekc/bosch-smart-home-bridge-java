@@ -5,10 +5,14 @@ import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import de.holomekc.bshb.model.service.controller.SoftwareUpdateState;
+import lombok.Getter;
+
 /**
  * @author Christopher Holomek
  * @since 18.01.2020
  */
+@Getter
 public class PublicInformation {
 
     private List<String> apiVersions;
@@ -20,44 +24,12 @@ public class PublicInformation {
     private List<String> clientIds;
     private Map<String, Boolean> featureToggles;
 
-    public List<String> getApiVersions() {
-        return this.apiVersions;
-    }
-
-    public SoftwareUpdateState getSoftwareUpdateState() {
-        return this.softwareUpdateState;
-    }
-
-    public boolean isClaimed() {
-        return this.claimed;
-    }
-
-    public String getCountry() {
-        return this.country;
-    }
-
-    public String getTacVersion() {
-        return this.tacVersion;
-    }
-
-    public String getShcIpAddress() {
-        return this.shcIpAddress;
-    }
-
-    public List<String> getClientIds() {
-        return this.clientIds;
-    }
-
-    public Map<String, Boolean> getFeatureToggles() {
-        return this.featureToggles;
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this).append("apiVersions", this.apiVersions)
                 .append("softwareUpdateState", this.softwareUpdateState).append("claimed", this.claimed)
-                .append("country", this.country).append("tacVersion", this.tacVersion).append("shcIpAddress",
-                        this.shcIpAddress)
-                .append("clientIds", this.clientIds).append("featureToggles", this.featureToggles).toString();
+                .append("country", this.country).append("tacVersion", this.tacVersion)
+                .append("shcIpAddress", this.shcIpAddress).append("clientIds", this.clientIds)
+                .append("featureToggles", this.featureToggles).toString();
     }
 }

@@ -4,12 +4,15 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import lombok.Getter;
+
 /**
  * @author Christopher Holomek
  * @since 12.01.2020
  */
 @JsonTypeName("client")
-public class BoschClientData extends Identifier {
+@Getter
+public class BoschClientData extends NamedIdentifier {
 
     private final String primaryRole;
     private final boolean deleted;
@@ -32,21 +35,9 @@ public class BoschClientData extends Identifier {
         this.deleted = false;
     }
 
-    public String getPrimaryRole() {
-        return this.primaryRole;
-    }
-
-    public boolean isDeleted() {
-        return this.deleted;
-    }
-
-    public String getCertificate() {
-        return this.certificate;
-    }
-
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("primaryRole", this.primaryRole).append("deleted", this.deleted)
-                .append("certificate", this.certificate).toString();
+        return new ToStringBuilder(this).appendSuper(super.toString()).append("primaryRole", this.primaryRole)
+                .append("deleted", this.deleted).append("certificate", this.certificate).toString();
     }
 }

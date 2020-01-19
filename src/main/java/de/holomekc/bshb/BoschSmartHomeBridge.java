@@ -3,9 +3,12 @@ package de.holomekc.bshb;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import de.holomekc.bshb.client.BshbResponse;
 import de.holomekc.bshb.client.BshcClient;
 import de.holomekc.bshb.client.PairingClient;
+import de.holomekc.bshb.style.BshbStyle;
 import io.reactivex.Observable;
 
 /**
@@ -19,18 +22,17 @@ public class BoschSmartHomeBridge {
     private final PairingClient pairingClient;
     private final BshcClient bshcClient;
 
-    private final String host;
-
     public BoschSmartHomeBridge(final BoschSmartHomeBridgeBuilder bshbBuilder) {
-        this.host = bshbBuilder.getHost();
         this.certificateStorage =
                 new CertificateStorage(bshbBuilder.getClientCert(), bshbBuilder.getClientPrivateKey());
-        this.pairingClient = new PairingClient(this.host);
-        this.bshcClient = new BshcClient(this.host, this.certificateStorage);
+        this.pairingClient = new PairingClient(bshbBuilder.getHost());
+        this.bshcClient = new BshcClient(bshbBuilder.getHost(), this.certificateStorage);
 
         // remove sensitive data from builder
         bshbBuilder.withClientCert("");
         bshbBuilder.withClientPrivateKey("");
+
+        ToStringBuilder.setDefaultStyle(new BshbStyle());
     }
 
     public BshcClient getBshcClient() {

@@ -1,17 +1,20 @@
-package de.holomekc.bshb.model.information;
+package de.holomekc.bshb.model.service.controller;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-import de.holomekc.bshb.model.Type;
+import de.holomekc.bshb.model.information.SoftwareActivationDate;
+import de.holomekc.bshb.model.service.State;
+import lombok.Getter;
 
 /**
  * @author Christopher Holomek
  * @since 18.01.2020
  */
 @JsonTypeName("softwareUpdateState")
-public class SoftwareUpdateState extends Type {
+@Getter
+public class SoftwareUpdateState extends State {
 
     public enum UpdateState {
         // TODO: Not sure if this is all. This is all I could see
@@ -35,29 +38,9 @@ public class SoftwareUpdateState extends Type {
     private String swInstalledVersion;
     private SoftwareActivationDate swActivationDate;
 
-    public UpdateState getSwUpdateState() {
-        return this.swUpdateState;
-    }
-
-    public UpdateLastResult getSwUpdateLastResult() {
-        return this.swUpdateLastResult;
-    }
-
-    public String getSwUpdateAvailableVersion() {
-        return this.swUpdateAvailableVersion;
-    }
-
-    public String getSwInstalledVersion() {
-        return this.swInstalledVersion;
-    }
-
-    public SoftwareActivationDate getSwActivationDate() {
-        return this.swActivationDate;
-    }
-
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("swUpdateState", this.swUpdateState)
+        return new ToStringBuilder(this).appendSuper(super.toString()).append("swUpdateState", this.swUpdateState)
                 .append("swUpdateLastResult", this.swUpdateLastResult)
                 .append("swUpdateAvailableVersion", this.swUpdateAvailableVersion)
                 .append("swInstalledVersion", this.swInstalledVersion).append("swActivationDate", this.swActivationDate)

@@ -2,33 +2,26 @@ package de.holomekc.bshb.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import lombok.Getter;
+
 /**
  * @author Christopher Holomek
- * @since 18.01.2020
+ * @since 19.01.2020
  */
-public class Identifier extends Type {
+@Getter
+public abstract class Identifier extends BshcType {
 
     private String id;
-    private String name;
 
     public Identifier() {
     }
 
-    public Identifier(final String id, final String name) {
+    public Identifier(final String id) {
         this.id = id;
-        this.name = name;
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("id", this.id).append("name", this.name).toString();
+        return new ToStringBuilder(this).appendSuper(super.toString()).append("id", this.id).toString();
     }
 }

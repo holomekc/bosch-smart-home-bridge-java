@@ -2,26 +2,17 @@ package de.holomekc.bshb.model.information;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import lombok.Getter;
+
 /**
  * @author Christopher Holomek
  * @since 18.01.2020
  */
+@Getter
 public class ConnectivityVersion {
     private String name;
     private int minVersion;
     private int maxVersion;
-
-    public String getName() {
-        return this.name;
-    }
-
-    public int getMinVersion() {
-        return this.minVersion;
-    }
-
-    public int getMaxVersion() {
-        return this.maxVersion;
-    }
 
     @Override
     public String toString() {

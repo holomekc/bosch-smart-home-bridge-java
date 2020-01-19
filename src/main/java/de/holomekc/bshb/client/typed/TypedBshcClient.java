@@ -3,9 +3,11 @@ package de.holomekc.bshb.client.typed;
 import java.util.List;
 
 import de.holomekc.bshb.client.BshcClient;
+import de.holomekc.bshb.model.device.Device;
 import de.holomekc.bshb.model.information.Information;
 import de.holomekc.bshb.model.information.PublicInformation;
 import de.holomekc.bshb.model.room.Room;
+import de.holomekc.bshb.model.service.Service;
 import io.reactivex.Observable;
 
 /**
@@ -43,5 +45,20 @@ public class TypedBshcClient {
     public Observable<TypedBshbResponse<List<Room>>> getRooms() {
         return this.client.getRooms().flatMap(bshbResponse -> Observable
                 .just(new TypedBshbResponse<>(bshbResponse, bshbResponse.readList(Room.class))));
+    }
+
+    public Observable<TypedBshbResponse<List<Device>>> getDevices() {
+        return this.client.getDevices().flatMap(bshbResponse -> Observable
+                .just(new TypedBshbResponse<>(bshbResponse, bshbResponse.readList(Device.class))));
+    }
+
+    public Observable<TypedBshbResponse<Device>> getDevice(final String id) {
+        return this.client.getDevice(id).flatMap(bshbResponse -> Observable
+                .just(new TypedBshbResponse<>(bshbResponse, bshbResponse.readEntity(Device.class))));
+    }
+
+    public Observable<TypedBshbResponse<List<Service>>> getDevicesServices() {
+        return this.client.getDevicesServices().flatMap(bshbResponse -> Observable
+                .just(new TypedBshbResponse<>(bshbResponse, bshbResponse.readList(Service.class))));
     }
 }

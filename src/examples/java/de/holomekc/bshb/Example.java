@@ -56,24 +56,28 @@ public class Example {
 
                 //System.out.println(getRoomsResponse.getResponse().readEntity(JsonNode.class));
 
-                typedClient.getInformation().subscribe(info -> {
+                //typedClient.getInformation().subscribe(info -> {
+                //    System.out.println(info.getData());
+                //});
+                //
+                //boschSmartHomeBridge.getBshcClient().getDevices().subscribe(info -> {
+                //    System.out.println(info.getResponse().readEntity(String.class));
+                //});
+                //
+                //boschSmartHomeBridge.getBshcClient().setAlarmState(false).subscribe(info -> {
+                //    System.out.println(info.getResponse().readEntity(String.class));
+                //});
+                //
+                //boschSmartHomeBridge.getBshcClient().subscribe().subscribe(subscriptionId -> {
+                //    System.out.println(subscriptionId);
+                //
+                //    boschSmartHomeBridge.getBshcClient().longPolling(subscriptionId, 30000).subscribe(response -> {
+                //        System.out.println(response);
+                //    });
+                //});
+
+                typedClient.getDevicesServices().subscribe(info -> {
                     System.out.println(info.getData());
-                });
-
-                boschSmartHomeBridge.getBshcClient().getDevices().subscribe(info -> {
-                    System.out.println(info.getResponse().readEntity(String.class));
-                });
-
-                boschSmartHomeBridge.getBshcClient().setAlarmState(false).subscribe(info -> {
-                    System.out.println(info.getResponse().readEntity(String.class));
-                });
-
-                boschSmartHomeBridge.getBshcClient().subscribe().subscribe(subscriptionId -> {
-                    System.out.println(subscriptionId);
-
-                    boschSmartHomeBridge.getBshcClient().longPolling(subscriptionId, 30000).subscribe(response -> {
-                        System.out.println(response);
-                    });
                 });
 
             });

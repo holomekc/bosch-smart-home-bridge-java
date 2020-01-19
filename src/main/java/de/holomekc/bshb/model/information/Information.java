@@ -1,9 +1,15 @@
 package de.holomekc.bshb.model.information;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import de.holomekc.bshb.model.service.controller.SoftwareUpdateState;
+import lombok.Getter;
+
 /**
  * @author Christopher Holomek
  * @since 18.01.2020
  */
+@Getter
 public class Information {
 
     private String availableSoftwareVersion;
@@ -12,30 +18,9 @@ public class Information {
     private String version;
     private SoftwareUpdateState.UpdateState updateState;
 
-    public String getAvailableSoftwareVersion() {
-        return this.availableSoftwareVersion;
-    }
-
-    public String getConnectivityVersion() {
-        return this.connectivityVersion;
-    }
-
-    public String getUpdateUrl() {
-        return this.updateUrl;
-    }
-
-    public String getVersion() {
-        return this.version;
-    }
-
-    public SoftwareUpdateState.UpdateState getUpdateState() {
-        return this.updateState;
-    }
-
     @Override
     public String toString() {
-        return new org.apache.commons.lang3.builder.ToStringBuilder(this)
-                .append("availableSoftwareVersion", this.availableSoftwareVersion)
+        return new ToStringBuilder(this).append("availableSoftwareVersion", this.availableSoftwareVersion)
                 .append("connectivityVersion", this.connectivityVersion).append("updateUrl", this.updateUrl)
                 .append("version", this.version).append("updateState", this.updateState).toString();
     }
