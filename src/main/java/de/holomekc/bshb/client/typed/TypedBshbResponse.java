@@ -2,6 +2,8 @@ package de.holomekc.bshb.client.typed;
 
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import de.holomekc.bshb.client.BshbResponse;
 
 /**
@@ -24,5 +26,10 @@ public class TypedBshbResponse<T> {
 
     public T getData() {
         return this.data;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("data", this.data).toString();
     }
 }

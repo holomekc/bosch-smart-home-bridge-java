@@ -12,8 +12,9 @@ Work in progress
 ## Progress
 - [x] Allow communication if client is already paired
 - [x] Pair a new client
-- [ ] Add some methods to client 
-- [ ] Add an abstract method to client to allow direct communication
+- [x] Add some methods to client 
+- [x] Add an abstract method to client to allow direct communication
+- [ ] typed client as wrapper or models which wrap JsonNode
 - [ ] javadoc and other documentation
 
 ## Examples

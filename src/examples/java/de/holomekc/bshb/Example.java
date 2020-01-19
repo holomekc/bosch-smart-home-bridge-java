@@ -1,6 +1,7 @@
 package de.holomekc.bshb;
 
 import de.holomekc.bshb.client.typed.TypedBshcClient;
+import de.holomekc.bshb.model.service.heating.ClimateControlState;
 import de.holomekc.bshb.security.CertificateDefinition;
 
 /**
@@ -79,6 +80,11 @@ public class Example {
                 typedClient.getDevicesServices().subscribe(info -> {
                     System.out.println(info.getData());
                 });
+
+                typedClient.<ClimateControlState>getDeviceServices("roomClimateControl_hz_2", "RoomClimateControl")
+                        .subscribe(info -> {
+                            System.out.println(info.getData().getState().getSetpointTemperature());
+                        });
 
             });
         } catch (final Exception e) {

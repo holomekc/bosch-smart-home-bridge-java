@@ -8,6 +8,7 @@ import de.holomekc.bshb.model.information.Information;
 import de.holomekc.bshb.model.information.PublicInformation;
 import de.holomekc.bshb.model.room.Room;
 import de.holomekc.bshb.model.service.Service;
+import de.holomekc.bshb.model.service.State;
 import io.reactivex.Observable;
 
 /**
@@ -57,8 +58,25 @@ public class TypedBshcClient {
                 .just(new TypedBshbResponse<>(bshbResponse, bshbResponse.readEntity(Device.class))));
     }
 
-    public Observable<TypedBshbResponse<List<Service>>> getDevicesServices() {
+    @SuppressWarnings("unchecked")
+    public Observable<TypedBshbResponse<List<Service<? extends State>>>> getDevicesServices() {
         return this.client.getDevicesServices().flatMap(bshbResponse -> Observable
-                .just(new TypedBshbResponse<>(bshbResponse, bshbResponse.readList(Service.class))));
+                .just(new TypedBshbResponse<>(bshbResponse,
+                        bshbResponse.readList((Class<Service<?>>) (Class<?>) Service.class))));
+    }
+
+    @SuppressWarnings("unchecked")
+    public Observable<TypedBshbResponse<List<Service<? extends State>>>> getDeviceServices(final String deviceId) {
+        return this.client.getDeviceServices(deviceId).flatMap(bshbResponse -> Observable
+                .just(new TypedBshbResponse<>(bshbResponse,
+                        bshbResponse.readList((Class<Service<?>>) (Class<?>) Service.class))));
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends State> Observable<TypedBshbResponse<Service<T>>> getDeviceServices(final String deviceId,
+            final String serviceId) {
+        return this.client.getDeviceServices(deviceId, serviceId).flatMap(bshbResponse -> Observable
+                .just(new TypedBshbResponse<>(bshbResponse,
+                        bshbResponse.readEntity((Class<Service<T>>) (Class<?>) Service.class))));
     }
 }
