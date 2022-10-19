@@ -15,7 +15,7 @@
         <jersey.version>2.30</jersey.version>
         <rxjava.version>2.2.16</rxjava.version>
         <!-- TODO:  -->
-        <jackson.version>2.10.1</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
         <bouncycastle.version>1.64</bouncycastle.version>
 
         <!-- Test -->
